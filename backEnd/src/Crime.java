@@ -1,29 +1,29 @@
 /**
  * Created by Agronis on 11/5/15.
  */
-public class StateCrime {
-    String state;
+public class Crime {
+    String name;
     String abbrev;
     int year;
     int population;
-    int crimeTotal;
+    int total;
     int murder;
     int manslaughter;
     int rape;
     int robbery;
     int assault;
 
-    public StateCrime(){
+    public Crime(){
 
     }
 
-    public StateCrime(String state, String abbrev, int year, int population, int crimeTotal, int murder, int manslaughter, int rape, int robbery, int assault) {
+    public Crime(String name, String abbrev, int year, int population, int total, int murder, int manslaughter, int rape, int robbery, int assault) {
 
-        this.state = state;
+        this.name = name;
         this.abbrev = abbrev;
         this.year = year;
         this.population = population;
-        this.crimeTotal = crimeTotal;
+        this.total = total;
         this.murder = murder;
         this.manslaughter = manslaughter;
         this.rape = rape;

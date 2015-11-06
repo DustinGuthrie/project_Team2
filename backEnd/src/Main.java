@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * Created by Agronis on 11/5/15.
@@ -7,30 +8,18 @@ public class Main {
 
     public static void createTables(Connection con) throws SQLException {
         Statement stm = con.createStatement();
-        stm.execute("CREATE TABLE IF NOT EXISTS national_crime(id IDENTITY, year INT, population INT, violent_crime INT, murder INT" +
-                "rape INT, robbery INT, assault INT)");
-        stm.execute("CREATE TABLE IF NOT EXISTS state_crime (id IDENTITY, state VARCHAR, abbrev VARCHAR, year INT, population INT," +
-                "crime_total INT, murder INT, manslaughter INT, rape INT, robbery INT, assault INT)");
+        stm.execute("CREATE TABLE IF NOT EXISTS crime (id IDENTITY, abbrev VARCHAR, name VARCHAR,, year INT, population INT," +
+                "total INT, murder INT, manslaughter INT, rape INT, robbery INT, assault INT)");
     }
 
-    public static void insertNational(Connection con, NationalCrime c) throws SQLException {
-        PreparedStatement stm = con.prepareStatement("INSERT INTO national_crime VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)");
-        stm.setInt(1, c.year);
-        stm.setInt(2, c.population);
-        stm.setInt(3, c.violentCrime);
-        stm.setInt(4, c.murder);
-        stm.setInt(5, c.rape);
-        stm.setInt(6, c.robbery);
-        stm.setInt(7, c.assault);
-    }
 
-    public static void insertCrime(Connection con, StateCrime c) throws SQLException {
-        PreparedStatement stm = con.prepareStatement("INSERT INTO state_crime VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        stm.setString(1, c.state);
+    public static void insertCrime(Connection con, Crime c) throws SQLException {
+        PreparedStatement stm = con.prepareStatement("INSERT INTO crime VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        stm.setString(1, c.name);
         stm.setString(2, c.abbrev);
         stm.setInt(3, c.year);
         stm.setInt(4, c.population);
-        stm.setInt(5, c.crimeTotal);
+        stm.setInt(5, c.total);
         stm.setInt(6, c.murder);
         stm.setInt(7, c.manslaughter);
         stm.setInt(8, c.rape);
@@ -39,66 +28,71 @@ public class Main {
         stm.execute();
 
     }
-    public static StateCrime selectState(Connection conn, String state) throws SQLException {
-        StateCrime stateCrime = null;
-        PreparedStatement stm = conn.prepareStatement("SELECT * FROM state_crime WHERE state = ?");
-        stm.setString(1, state);
+    public static ArrayList<Crime> selectStateCrimes(Connection conn, String name) throws SQLException {
+        PreparedStatement stm = conn.prepareStatement("SELECT * FROM crime WHERE name = ?");
+        stm.setString(1, name);
+        ArrayList<Crime> crimes = new ArrayList();
         ResultSet results = stm.executeQuery();
-        if(results.next()){
-            stateCrime = new StateCrime();
-            stateCrime.abbrev = results.getString("abbrev");
-            stateCrime.year = results.getInt("year");
-            stateCrime.population = results.getInt("population");
-            stateCrime.crimeTotal = results.getInt("crime_total");
-            stateCrime.murder = results.getInt("murder");
-            stateCrime.manslaughter = results.getInt("manslaughter");
-            stateCrime.rape = results.getInt("rape");
-            stateCrime.robbery = results.getInt("robbery");
-            stateCrime.assault = results.getInt("assault");
+        while(results.next()){
+            Crime crime = new Crime();
+            crime.abbrev = results.getString("abbrev");
+            crime.year = results.getInt("year");
+            crime.population = results.getInt("population");
+            crime.total = results.getInt("total");
+            crime.murder = results.getInt("murder");
+            crime.manslaughter = results.getInt("manslaughter");
+            crime.rape = results.getInt("rape");
+            crime.robbery = results.getInt("robbery");
+            crime.assault = results.getInt("assault");
+            crimes.add(crime);
         }
-        return stateCrime;
+        return crimes;
     }
 
-    public static StateCrime selectAbbrev(Connection conn, String abbrev) throws SQLException {
-        StateCrime stateCrime = null;
-        PreparedStatement stm = conn.prepareStatement("SELECT * FROM state_crime WHERE abbrev = ?");
-        stm.setString(1, abbrev);
+
+    public static Crime selectYear(Connection conn, int year, String name) throws SQLException {
+        Crime crime = null;
+        PreparedStatement stm = conn.prepareStatement("SELECT * FROM crime WHERE year = ?, name = ?");
+        stm.setInt(1, year);
+        stm.setString(2, name);
         ResultSet results = stm.executeQuery();
         if(results.next()){
-            stateCrime = new StateCrime();
-            stateCrime.state = results.getString("state");
-            stateCrime.year = results.getInt("year");
-            stateCrime.population = results.getInt("population");
-            stateCrime.crimeTotal = results.getInt("crime_total");
-            stateCrime.murder = results.getInt("murder");
-            stateCrime.manslaughter = results.getInt("manslaughter");
-            stateCrime.rape = results.getInt("rape");
-            stateCrime.robbery = results.getInt("robbery");
-            stateCrime.assault = results.getInt("assault");
+            crime = new Crime();
+            crime.year = results.getInt("year");
+            crime.name = results.getString("name");
+            crime.abbrev = results.getString("abbrev");
+            crime.population = results.getInt("population");
+            crime.total = results.getInt("total");
+            crime.murder = results.getInt("murder");
+            crime.manslaughter = results.getInt("manslaughter");
+            crime.rape = results.getInt("rape");
+            crime.robbery = results.getInt("robbery");
+            crime.assault = results.getInt("assault");
         }
-        return stateCrime;
+        return crime;
     }
-
-    public static StateCrime selectYear(Connection conn, int year) throws SQLException {
-        StateCrime stateCrime = null;
-        PreparedStatement stm = conn.prepareStatement("SELECT * FROM state_crime WHERE year = ?");
+    public static ArrayList<Crime> selectYears(Connection conn, int year) throws SQLException {
+        ArrayList<Crime> crimes = new ArrayList();
+        Crime crime = null;
+        PreparedStatement stm = conn.prepareStatement("SELECT * FROM crime WHERE year = ?");
         stm.setInt(1, year);
         ResultSet results = stm.executeQuery();
-        if(results.next()){
-            stateCrime = new StateCrime();
-            stateCrime.state = results.getString("state");
-            stateCrime.abbrev = results.getString("abbrev");
-            stateCrime.population = results.getInt("population");
-            stateCrime.crimeTotal = results.getInt("crime_total");
-            stateCrime.murder = results.getInt("murder");
-            stateCrime.manslaughter = results.getInt("manslaughter");
-            stateCrime.rape = results.getInt("rape");
-            stateCrime.robbery = results.getInt("robbery");
-            stateCrime.assault = results.getInt("assault");
+        while (results.next()) {
+            crime = new Crime();
+            crime.name = results.getString("name");
+            crime.abbrev = results.getString("abbrev");
+            crime.year = results.getInt("year");
+            crime.population = results.getInt("population");
+            crime.total = results.getInt("total");
+            crime.murder = results.getInt("murder");
+            crime.manslaughter = results.getInt("manslaughter");
+            crime.rape = results.getInt("rape");
+            crime.robbery = results.getInt("robbery");
+            crime.assault = results.getInt("assault");
+            crimes.add(crime);
         }
-        return stateCrime;
+        return crimes;
     }
-
 
     public static void main(String[] args) throws SQLException {
         Connection con = DriverManager.getConnection("jdbc:h2:./main");
