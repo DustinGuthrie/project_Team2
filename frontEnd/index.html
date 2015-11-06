@@ -10,9 +10,68 @@
     <script>
     // Home page template here
     </script>
-    <script>
-    // State or Year template here
+    <script type="text/html" id="statsTmplCurrUser">
+      <article class="stateCurrUser" data-index="<%= _id %>" style="margin: 0;">
+        <div class="col-md-8 noPadding">
+          <h2 style="text-align: center; font-family: Oswald;"><%= this.state %></h2>
+          <h4 style="text-align: center;font-family: Ubuntu; border-top: 2px solid gray; border-bottom: 2px solid gray; margin-left: 30px;"><strong>Population:&nbsp</strong><%= this.populaiton %>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<strong>Total Violent Crimes:</strong> 1,214,464	</h4>
+            <div class="row">
+              <div class="col-md-2 noPadding"></div>
+              <div class="col-md-4">
+                <h6 style="text-align: right;font-family: Oswald; font-size: 16px;">Robbery:</h6>
+              </div>
+              <div class="col-md-4">
+                <h6 style="text-align: left;font-family: Oswald; font-size: 16px;"><%= this.robbery %></h6>
+              </div>
+              <div class="col-md-2 noPadding"></div>
+            </div>
+            <div class="row">
+              <div class="col-md-2 noPadding"></div>
+              <div class="col-md-4">
+                <h6 style="text-align: right;font-family: Oswald; font-size: 16px;">Manslaughter:</h6>
+              </div>
+              <div class="col-md-4">
+                <h6 style="text-align: left;font-family: Oswald; font-size: 16px;"><%= this.manslaughter %></h6>
+              </div>
+              <div class="col-md-2 noPadding"></div>
+            </div>
+            <div class="row">
+              <div class="col-md-2 noPadding"></div>
+              <div class="col-md-4">
+                <h6 style="text-align: right;font-family: Oswald; font-size: 16px;">Rape:</h6>
+              </div>
+              <div class="col-md-4">
+                <h6 style="text-align: left;font-family: Oswald; font-size: 16px;"><%= this.rape %></h6>
+              </div>
+              <div class="col-md-2 noPadding"></div>
+            </div>
+            <div class="row">
+              <div class="col-md-2 noPadding"></div>
+              <div class="col-md-4">
+                <h6 style="text-align: right;font-family: Oswald; font-size: 16px;">Murder:</h6>
+              </div>
+              <div class="col-md-4">
+                <h6 style="text-align: left;font-family: Oswald; font-size: 16px;"><%= this.murder %></h6>
+              </div>
+              <div class="col-md-2 noPadding"></div>
+            </div>
+            <div class="row">
+              <div class="col-md-2 noPadding"></div>
+              <div class="col-md-4">
+                <h6 style="text-align: right;font-family: Oswald; font-size: 16px;">Assault:</h6>
+              </div>
+              <div class="col-md-4">
+                <h6 style="text-align: left;font-family: Oswald; font-size: 16px;"><%= this.assault %></h6>
+              </div>
+              <div class="col-md-2 noPadding"></div>
+            </div>
+          <img src="https://www.fbi.gov/news/stories/2013/september/latest-crime-stats-released/image/graphic-snapshot-of-violent-crimes-in-u.s"/ style="padding-left:150px; padding-top: 15px; height: 395px;">
+        </div>
+          <!-- <button type="button" style="padding-top: 5px; border: 2px solid #2B80F7; background-color: #f8f8f8; border-radius: 3px; font-family: 'Special Elite', cursive;" class="btn-group btn-group-xs delete">Delete&nbsp&nbsp&nbsp<span class="glyphicon glyphicon-trash"></span></button> -->
+        </div>
+      </article>
     </script>
+
 
   </head>
   <body>
@@ -21,7 +80,6 @@
         <div class="row">
 
           <div class="col-md-1" style=""><img src="https://d21ii91i3y6o6h.cloudfront.net/gallery_images/from_proof/7220/large/1439576827/merica.png"/ style="height: 60px; margin-left: 20px;"></div>
-
           <!-- <div class="col-md-1" style=""><img src="http://ih1.redbubble.net/image.13755405.1480/sticker,375x360.u1.png"/ style="height: 60px; margin-left: 20px;"></div> -->
           <div class="col-md-7" style="text-align: leftSide; font-size: 32px; padding-top: 5px; padding-bottom: 5px;"></div>
           <div class="col-md-2" style="padding-top: 10px;">
@@ -150,36 +208,38 @@
                 </div>
               <div class="col-md-1" style="padding-top: 10px; margin: 0; ">
                   <div class="btn-group">
-                      <button type="button" id="btnSearch" class="btn btn-primary">Search</button>
+                      <button type="button" id="stateYearButton"  name=="submit" class="btn btn-primary">Search</button>
                   </div>
               </div>
         </div>
       </header>
 
       <!-- Dustin's section - This will become the home page template -->
-      <section class="homePage">
+      <section class="homePage ">
         <div class="row">
           <!-- <div class="col-md-1 noPadding">A Little White Space</div> -->
-          <div class="col-md-8 noPadding">
+
+          <!-- *****This is where the template will swap data in and out***** -->
+          <div class="col-md-8 noPadding statMain">
             <h2 style="text-align: center; font-family: Oswald;">National Crime Statistics</h2>
             <h4 style="text-align: center;font-family: Ubuntu; border-top: 2px solid gray; border-bottom: 2px solid gray; margin-left: 30px;"><strong>US Population:</strong> 313,914,040&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<strong>Total Violent Crimes:</strong> 1,214,464	</h4>
               <div class="row">
                 <div class="col-md-2 noPadding"></div>
                 <div class="col-md-4">
-                  <h6 style="text-align: right;font-family: Oswald; font-size: 16px;">Violent Crime:</h6>
+                  <h6 style="text-align: right;font-family: Oswald; font-size: 16px;">Burglary:</h6>
                 </div>
                 <div class="col-md-4">
-                  <h6 style="text-align: left;font-family: Oswald; font-size: 16px;">1,000,000</h6>
+                  <h6 style="text-align: left;font-family: Oswald; font-size: 16px;">2,103,787</h6>
                 </div>
                 <div class="col-md-2 noPadding"></div>
               </div>
               <div class="row">
                 <div class="col-md-2 noPadding"></div>
                 <div class="col-md-4">
-                  <h6 style="text-align: right;font-family: Oswald; font-size: 16px;">Murder:</h6>
+                  <h6 style="text-align: right;font-family: Oswald; font-size: 16px;">Manslaughter:</h6>
                 </div>
                 <div class="col-md-4">
-                  <h6 style="text-align: left;font-family: Oswald; font-size: 16px;">1,000,000</h6>
+                  <h6 style="text-align: left;font-family: Oswald; font-size: 16px;">14,827</h6>
                 </div>
                 <div class="col-md-2 noPadding"></div>
               </div>
@@ -189,7 +249,7 @@
                   <h6 style="text-align: right;font-family: Oswald; font-size: 16px;">Rape:</h6>
                 </div>
                 <div class="col-md-4">
-                  <h6 style="text-align: left;font-family: Oswald; font-size: 16px;">1,000,000</h6>
+                  <h6 style="text-align: left;font-family: Oswald; font-size: 16px;">84,376	</h6>
                 </div>
                 <div class="col-md-2 noPadding"></div>
               </div>
@@ -199,7 +259,7 @@
                   <h6 style="text-align: right;font-family: Oswald; font-size: 16px;">Robbery:</h6>
                 </div>
                 <div class="col-md-4">
-                  <h6 style="text-align: left;font-family: Oswald; font-size: 16px;">1,000,000</h6>
+                  <h6 style="text-align: left;font-family: Oswald; font-size: 16px;">354,522</h6>
                 </div>
                 <div class="col-md-2 noPadding"></div>
               </div>
@@ -209,18 +269,21 @@
                   <h6 style="text-align: right;font-family: Oswald; font-size: 16px;">Assault:</h6>
                 </div>
                 <div class="col-md-4">
-                  <h6 style="text-align: left;font-family: Oswald; font-size: 16px;">1,000,000</h6>
+                  <h6 style="text-align: left;font-family: Oswald; font-size: 16px;">760,739</h6>
                 </div>
                 <div class="col-md-2 noPadding"></div>
               </div>
             <img src="https://www.fbi.gov/news/stories/2013/september/latest-crime-stats-released/image/graphic-snapshot-of-violent-crimes-in-u.s"/ style="padding-left:150px; padding-top: 15px; height: 395px;">
           </div>
+
+
+          <!-- This is the photo of colbert -->
           <div class="col-md-2 noPadding"><img style="height: 680px; margin-left: 15px;" src="http://images4.alphacoders.com/346/34666.jpg"/></div>
         </div>
       </section>
 
       <!-- Allie's section - This will become a the state or year template -->
-      <section class="statePage hidden">
+      <!-- <section class="statePage hidden">
         <div class="row">
           <div class="col-md-1 noPadding">A little white space</div>
           <div class="col-md-8 noPadding">
@@ -230,7 +293,7 @@
         </div>
 
 
-      </section>
+      </section> -->
 
 
     </div>
